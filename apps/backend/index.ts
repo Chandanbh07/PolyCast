@@ -1,4 +1,4 @@
-import express from "express";
+﻿import express from "express";
 import http from "http";
 import { uuid } from "uuidv4";
 import cors from "cors";
@@ -9,7 +9,7 @@ import { CreateOrderSchema, SplitSchema, OnrampSchema, OfframpSchema, CreateComm
 import { attachRealtime, broadcast } from "./realtime";
 
 const app = express();
-const PORT = 3000;
+const PORT = Number(process.env.PORT) || 3000;
 
 app.use(express.json())
 
