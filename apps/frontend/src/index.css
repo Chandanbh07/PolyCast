@@ -1,0 +1,101 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+@import "tailwindcss";
+
+@theme {
+  /* Ember palette: warm obsidian base, amber-gold brand accent, jade/rose outcome hues */
+  --color-ink-950: #0c0a08;
+  --color-ink-900: #120f0b;
+  --color-ink-850: #171310;
+  --color-ink-800: #1d1812;
+  --color-ink-700: #29221a;
+  --color-ink-600: #3a3025;
+  --color-ink-500: #564736;
+
+  --color-mist-400: #a89a86;
+  --color-mist-300: #c2b6a3;
+  --color-mist-200: #ddd3c4;
+  --color-mist-100: #f0ebe0;
+  --color-mist-50: #faf7f0;
+
+  --color-signal-500: #d99a34;
+  --color-signal-400: #e8b263;
+  --color-signal-300: #f0cb96;
+
+  --color-yes-600: #1a8f6b;
+  --color-yes-500: #2fb583;
+  --color-yes-400: #5ecfa4;
+  --color-yes-glow: rgba(47, 181, 131, 0.35);
+
+  --color-no-500: #dd4f68;
+  --color-no-600: #c23a52;
+  --color-no-400: #ea7c8f;
+  --color-no-glow: rgba(221, 79, 104, 0.35);
+
+  --font-display: 'Space Grotesk', 'Inter', sans-serif;
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+
+  --shadow-glass: 0 1px 1px rgba(255,255,255,0.06) inset, 0 8px 32px rgba(0,0,0,0.45);
+  --shadow-glow-yes: 0 0 24px var(--color-yes-glow);
+  --shadow-glow-no: 0 0 24px var(--color-no-glow);
+  --shadow-glow-signal: 0 0 24px rgba(217, 154, 52, 0.35);
+}
+
+* {
+  border-color: var(--color-ink-700);
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  background-color: var(--color-ink-950);
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(217, 154, 52, 0.14), transparent),
+    radial-gradient(ellipse 60% 40% at 90% 10%, rgba(47, 181, 131, 0.06), transparent);
+  color: var(--color-mist-100);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  min-height: 100svh;
+}
+
+.font-display { font-family: var(--font-display); }
+.font-mono-nums { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+
+.glass {
+  background: linear-gradient(180deg, rgba(255,255,255,0.045), rgba(255,255,255,0.015));
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: var(--shadow-glass);
+}
+
+.glass-hover {
+  transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+.glass-hover:hover {
+  border-color: rgba(255,255,255,0.16);
+  transform: translateY(-2px);
+}
+
+.scrollbar-none { scrollbar-width: none; -ms-overflow-style: none; }
+.scrollbar-none::-webkit-scrollbar { display: none; }
+
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--color-ink-600); border-radius: 8px; }
+::-webkit-scrollbar-thumb:hover { background: var(--color-ink-500); }
+
+:focus-visible {
+  outline: 2px solid var(--color-signal-400);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
