@@ -88,6 +88,8 @@ enum PositionType {
 enum OrderType {
   Buy
   Sell
+  Split
+  Merge
 }
 
 enum MarketCategory {

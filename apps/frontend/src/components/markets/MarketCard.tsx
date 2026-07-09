@@ -48,16 +48,16 @@ export function MarketCard({ market, index = 0 }: { market: Market; index?: numb
           )}
         </div>
 
-        <div className="relative mt-3 flex items-start justify-between gap-3">
-          <h3 className="font-display text-base font-semibold leading-snug text-mist-50 line-clamp-3">
+        <div className="relative mt-3 flex items-start gap-3">
+          <h3 className="font-display flex-1 text-base font-semibold leading-snug text-mist-50 line-clamp-3">
             {market.title}
           </h3>
-          <ProbabilityRing yesPrice={pricing.yesPrice} size={52} strokeWidth={5} />
+          <ProbabilityRing yesPrice={pricing.yesPrice} size={56} strokeWidth={5} />
         </div>
 
         <p className="relative mt-2.5 line-clamp-2 text-sm text-mist-400">{market.description}</p>
 
-        <div className="relative mt-4 flex items-center gap-2">
+        <div className="relative mt-4 flex flex-wrap items-center gap-2">
           <Badge variant="yes">Yes {pricing.yesPrice}¢</Badge>
           <Badge variant="no">No {pricing.noPrice}¢</Badge>
           <span
@@ -71,14 +71,14 @@ export function MarketCard({ market, index = 0 }: { market: Market; index?: numb
           </span>
         </div>
 
-        <div className="relative mt-4 grid grid-cols-2 gap-y-1.5 border-t border-ink-700/80 pt-3 text-xs text-mist-400">
+        <div className="relative mt-4 flex flex-wrap items-center gap-x-3 gap-y-1.5 border-t border-ink-700/80 pt-3 text-xs text-mist-400">
           <span className="font-mono-nums">{formatCompactUsd(market.totalQty)} vol</span>
-          <span className="font-mono-nums text-right">{formatCompactUsd(meta.liquidity)} liq</span>
+          <span className="font-mono-nums">{formatCompactUsd(meta.liquidity)} liq</span>
           <span className="flex items-center gap-1">
             <Users className="size-3" />
             {meta.participants.toLocaleString()}
           </span>
-          <span className="flex items-center justify-end gap-1">
+          <span className="ml-auto flex items-center gap-1">
             <Clock className="size-3" />
             {isResolved ? "Closed" : formatEndDate(meta.endDate)}
           </span>

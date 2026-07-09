@@ -403,6 +403,14 @@ async function main() {
     // ---- resting orderbook liquidity around the seed probability ----
     const yesOrderbook: Record<string, { availableQty: number; orders: unknown[] }> = {};
     const noOrderbook: Record<string, { availableQty: number; orders: unknown[] }> = {};
+    // Every resting order below is a plain ask (reverseOrder: false), which the
+    // matching engine correctly assumes is backed by real inventory — it
+    // decrements the maker's existing Position row on a fill rather than
+    // upserting one into existence (upserting here would let shares appear
+    // from nothing, which is worse than a crash). So each maker below needs a
+    // real Position row with at least this much qty, created after the market
+    // exists (see the loop right after `prisma.market.create`).
+    const restingInventory: { userId: string; type: PositionType; qty: number }[] = [];
 
     if (!isResolved) {
       const noPrice = 100 - seed.pYes;
@@ -422,6 +430,8 @@ async function main() {
           availableQty: noQty,
           orders: [{ userId: noUser, qty: noQty, filledQty: 0, originalOrderId: crypto.randomUUID(), reverseOrder: false }],
         };
+        restingInventory.push({ userId: yesUser, type: "Yes", qty: yesQty });
+        restingInventory.push({ userId: noUser, type: "No", qty: noQty });
       }
     }
 
@@ -487,6 +497,19 @@ async function main() {
     await prisma.orderHistory.createMany({
       data: trades.map((tr) => ({ ...tr, marketId: market.id })),
     });
+
+    // Give every resting-order maker real inventory to back their ask (see the
+    // comment above `restingInventory`). A little headroom (+20%) so a
+    // partially-filled ask still leaves a valid, non-zero position row rather
+    // than landing exactly at zero.
+    for (const inv of restingInventory) {
+      const qty = Math.ceil(inv.qty * 1.2);
+      await prisma.position.upsert({
+        where: { userId_marketId_type: { userId: inv.userId, marketId: market.id, type: inv.type } },
+        create: { userId: inv.userId, marketId: market.id, type: inv.type, qty },
+        update: { qty: { increment: qty } },
+      });
+    }
 
     // ---- a handful of open positions for Portfolio/Leaderboard demo ----
     const holderCount = 3 + Math.floor(rand() * 10);

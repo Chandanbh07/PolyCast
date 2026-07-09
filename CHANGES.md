@@ -1,3 +1,96 @@
+# What changed — Production bug fixes from live testing (latest)
+
+You ran this against a real database for the first time and hit three real
+issues — here's the root cause and fix for each.
+
+## 1. Buy/Split failing on almost every market (P2025 on `Position.update`)
+
+**Root cause:** the matching engine's maker-fill code correctly assumes a
+resting *ask* is backed by real inventory — when a taker's order matches a
+resting order, it does `tx.position.update()` (decrementing the maker's
+existing position), not `upsert()`. That's the right call: an ask should
+never be able to conjure shares from nothing, so it's correct for this to
+fail loudly if that invariant is violated. The bug was that `prisma/seed.ts`
+violated the invariant — it wrote resting orders into `yesOrderbook` /
+`noOrderbook` under random users without ever giving those users a matching
+`Position` row. So almost any real trade that matched against seeded
+liquidity hit `P2025: no record found for update`. The one market that
+worked was luck — the order you placed on it happened not to cross any
+resting price level.
+
+**Fix:** `prisma/seed.ts` now tracks every resting order's maker while
+building the book (`restingInventory`) and, once the market row exists,
+upserts a real `Position` for each of them (qty +20% headroom, so a partial
+fill doesn't leave the row at exactly zero). Verified with a scripted check
+against a mocked Prisma client: 516 resting orders generated, 0 backed by
+insufficient inventory.
+
+**You need to re-seed** for this fix to take effect — it doesn't repair
+already-seeded bad data: `bun run prisma/seed.ts`.
+
+## 2. Schema drift on `OrderType`
+
+Found while investigating #1: a migration
+(`20260708130000_orderhistory_split_merge`) already added `Split`/`Merge` to
+the database's `OrderType` enum, but `schema.prisma` still only declared
+`Buy | Sell` — so every regenerated client silently disagreed with the
+actual database. Fixed `schema.prisma` to match. No new migration needed
+(the DB-side change was already applied) — **just re-run `bunx prisma
+generate`** so the client's types catch up.
+
+## 3. Toast notifications overlapping the trading sidebar
+
+The error toast in your screenshot wasn't a separate bug — it's Sonner's
+default `bottom-right` position landing directly on top of the sticky
+Order Ticket / Split & Merge sidebar on Market Detail, which is exactly
+what made the UI look broken/ugly on top of the real trade failure. Moved
+toasts to `top-right` with a top offset clear of the navbar.
+
+## 4. Market card layout tightened
+
+Swapped the cramped 2×2 stat grid (volume/liquidity/holders/end-date) for a
+single wrapping row with an end-aligned date, and gave the probability ring
+a little more room. Not a full redesign — just removing the density that
+was making cards read as cluttered.
+
+## Deployment: "User was denied access on the database" on Render
+
+This isn't an application bug — it's a Postgres permissions issue between
+the role that ran your migrations and the role your app connects with
+(`polycast`, per your logs). The most common cause: migrations were applied
+by a different/admin role, and `polycast` was never explicitly granted
+rights on the tables that role created — Postgres does **not** auto-grant
+access to another role's objects, even within the same database.
+
+Connect with an admin/owner connection (Render's dashboard → your Postgres
+→ "Connect" gives you a superuser/owner connection string) and run:
+
+```sql
+GRANT USAGE, CREATE ON SCHEMA public TO polycast;
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO polycast;
+GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO polycast;
+ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON TABLES TO polycast;
+ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON SEQUENCES TO polycast;
+```
+
+If that doesn't resolve it, double check the database name in `DATABASE_URL`
+actually matches the database the migrations were applied to — a mismatched
+db name produces a similarly generic "access denied" rather than a clear
+"database does not exist" error on some Postgres providers.
+
+## Markets search
+
+Re-read `pages/Markets.tsx` end to end — it's a standard controlled input
+feeding a `useMemo` filter, no bug found in the code itself. Strong
+suspicion: if `/markets` was failing because of the Render permissions issue
+above, the page had nothing to filter, which would look identical to "search
+does nothing." Re-test once the database access is fixed and the reseed is
+done — if it's still broken after that, it needs a live repro (what exactly
+happens when you type: nothing renders, results don't narrow, input loses
+focus, etc.) since I can't reproduce it blind.
+
+---
+
 # What changed — Final polish & consistency pass (latest)
 
 A full read-through across every file touched in the previous four slices,

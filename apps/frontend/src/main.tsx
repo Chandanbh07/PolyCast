@@ -17,10 +17,11 @@ createRoot(document.getElementById('root')!).render(
         </BrowserRouter>
         <Toaster
           theme="dark"
-          position="bottom-right"
+          position="top-right"
+          offset={{ top: 76 }}
           toastOptions={{
             style: {
-              background: 'rgba(23,19,16,0.92)',
+              background: 'rgba(23,19,16,0.97)',
               border: '1px solid rgba(255,255,255,0.08)',
               color: '#f0ebe0',
             },
