@@ -19,7 +19,9 @@ export type PositionType = (typeof PositionType)[keyof typeof PositionType]
 
 export const OrderType = {
   Buy: 'Buy',
-  Sell: 'Sell'
+  Sell: 'Sell',
+  Split: 'Split',
+  Merge: 'Merge'
 } as const
 
 export type OrderType = (typeof OrderType)[keyof typeof OrderType]

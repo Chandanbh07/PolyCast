@@ -37,9 +37,11 @@ export function Navbar() {
             <span className="flex size-8 items-center justify-center rounded-lg bg-signal-500 shadow-glow-signal font-display text-sm font-bold text-ink-950">
               P
             </span>
-            <span className="font-display text-lg font-semibold tracking-tight text-mist-50">
-              PolyCast
-            </span>
+            <img
+              src="/logo.png"
+              alt="PolyCast"
+              className="h-8 w-8 rounded-lg object-contain"
+            />
           </NavLink>
 
           <nav className="hidden md:flex items-center gap-1">
