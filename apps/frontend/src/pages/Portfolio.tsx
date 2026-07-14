@@ -99,7 +99,7 @@ export default function Portfolio() {
   if (!address) {
     return (
       <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6">
-        <h1 className="font-display text-3xl font-semibold text-mist-50">Portfolio</h1>
+        <h1 className="font-display text-3xl font-semibold tracking-[-0.02em] text-mist-50">Portfolio</h1>
         <ConnectGate label="portfolio" />
       </div>
     );
@@ -110,26 +110,26 @@ export default function Portfolio() {
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6">
-      <h1 className="font-display text-3xl font-semibold text-mist-50">Portfolio</h1>
+      <h1 className="font-display text-3xl font-semibold tracking-[-0.02em] text-mist-50">Portfolio</h1>
 
       <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <div className="glass rounded-2xl p-5">
+        <div className="glass rounded-3xl p-5">
           <p className="flex items-center gap-1.5 text-xs text-mist-400">
             <Wallet2 className="size-3.5" /> Cash balance
           </p>
           <p className="font-mono-nums mt-2 text-2xl font-semibold text-mist-50">{balanceToUsd(balance)}</p>
         </div>
-        <div className="glass rounded-2xl p-5">
+        <div className="glass rounded-3xl p-5">
           <p className="text-xs text-mist-400">Open positions value</p>
           <p className="font-mono-nums mt-2 text-2xl font-semibold text-mist-50">${positionsValue.toFixed(2)}</p>
         </div>
-        <div className="glass rounded-2xl p-5">
+        <div className="glass rounded-3xl p-5">
           <p className="text-xs text-mist-400">Unrealized P&amp;L</p>
           <p className={cn("font-mono-nums mt-2 text-2xl font-semibold", unrealizedPnl >= 0 ? "text-yes-400" : "text-no-400")}>
             {unrealizedPnl >= 0 ? "+" : ""}${unrealizedPnl.toFixed(2)}
           </p>
         </div>
-        <div className="glass rounded-2xl p-5">
+        <div className="glass rounded-3xl p-5">
           <p className="text-xs text-mist-400">Realized P&amp;L</p>
           <p className={cn("font-mono-nums mt-2 text-2xl font-semibold", realizedPnl >= 0 ? "text-yes-400" : "text-no-400")}>
             {realizedPnl >= 0 ? "+" : ""}${realizedPnl.toFixed(2)}
@@ -137,7 +137,7 @@ export default function Portfolio() {
         </div>
       </div>
 
-      <div className="mt-6 glass rounded-2xl p-6">
+      <div className="mt-6 glass rounded-3xl p-6">
         <h2 className="font-display text-sm font-semibold text-mist-50">Net invested over time</h2>
         <p className="mt-1 text-xs text-mist-400">
           Cumulative cash you've put into positions — buys add, sells subtract.
@@ -152,7 +152,7 @@ export default function Portfolio() {
         <span className="text-xs text-mist-400">{openEntries.length} markets</span>
       </div>
       <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {loading && Array.from({ length: 3 }).map((_, i) => <Skeleton key={i} className="h-32 rounded-2xl" />)}
+        {loading && Array.from({ length: 3 }).map((_, i) => <Skeleton key={i} className="h-32 rounded-3xl" />)}
         {!loading && openEntries.length === 0 && (
           <p className="col-span-full py-10 text-center text-mist-400">
             You don't hold any open positions yet. Head to Markets to place your first trade.
@@ -202,13 +202,13 @@ export default function Portfolio() {
 
       <div className="mt-10 flex items-center justify-between">
         <h2 className="font-display text-lg font-semibold text-mist-50">Recent activity</h2>
-        <Link to="/orders" className="text-sm font-medium text-signal-300 hover:text-signal-200">
+        <Link to="/orders" className="text-sm font-medium text-signal-300 transition-colors hover:text-signal-200">
           View all
         </Link>
       </div>
-      <div className="glass mt-4 overflow-hidden rounded-2xl">
+      <div className="glass mt-4 overflow-hidden rounded-3xl">
         {historyLoading &&
-          Array.from({ length: 4 }).map((_, i) => <Skeleton key={i} className="mx-5 my-2 h-10 rounded-lg" />)}
+          Array.from({ length: 4 }).map((_, i) => <Skeleton key={i} className="mx-5 my-2 h-10 rounded-xl" />)}
         {!historyLoading && recentActivity.length === 0 && (
           <p className="px-5 py-8 text-center text-mist-400">No activity yet.</p>
         )}
@@ -216,7 +216,7 @@ export default function Portfolio() {
           <Link
             key={h.id}
             to={`/markets/${h.marketId}`}
-            className="flex items-center justify-between gap-3 border-b border-ink-800/60 px-5 py-3 text-sm last:border-b-0 hover:bg-ink-800/40"
+            className="flex items-center justify-between gap-3 border-b border-white/[0.06] px-5 py-3 text-sm transition-colors last:border-b-0 hover:bg-white/[0.03]"
           >
             <span className="flex items-center gap-2 truncate">
               {h.orderType === "Buy" ? (

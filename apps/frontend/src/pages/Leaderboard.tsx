@@ -7,9 +7,9 @@ import { balanceToUsd, truncateAddress, cn } from "@/lib/utils";
 import { Skeleton } from "@/components/ui/skeleton";
 
 const RANK_STYLES = [
-  "text-signal-300",
-  "text-mist-200",
-  "text-[#c88a4a]", // bronze, tuned to sit inside the ember palette
+  "text-[#e2c15a]", // gold — cool-friendly, restrained
+  "text-mist-200",  // silver
+  "text-[#b8875a]", // bronze — muted, sits on the cool base without clashing
 ];
 
 export default function Leaderboard() {
@@ -23,15 +23,15 @@ export default function Leaderboard() {
     <div className="mx-auto max-w-5xl px-4 py-10 sm:px-6">
       <div className="flex items-center gap-2.5">
         <Trophy className="size-6 text-signal-400" />
-        <h1 className="font-display text-3xl font-semibold text-mist-50">Leaderboard</h1>
+        <h1 className="font-display text-3xl font-semibold tracking-[-0.02em] text-mist-50">Leaderboard</h1>
       </div>
-      <p className="mt-1.5 text-sm text-mist-400">
+      <p className="mt-1.5 text-sm text-mist-400 leading-relaxed">
         Ranked by realized profit on resolved markets — payout at settlement minus what each trader
         actually put in.
       </p>
 
-      <div className="glass mt-6 overflow-hidden rounded-2xl">
-        <div className="grid grid-cols-[auto_1fr_auto_auto_auto] gap-4 border-b border-ink-700/60 px-5 py-3 text-xs font-medium text-mist-400">
+      <div className="glass mt-6 overflow-hidden rounded-3xl">
+        <div className="grid grid-cols-[auto_1fr_auto_auto_auto] gap-4 border-b border-white/[0.06] px-5 py-3 text-xs font-medium text-mist-400">
           <span className="w-8">#</span>
           <span>Trader</span>
           <span className="text-right">Volume</span>
@@ -40,7 +40,7 @@ export default function Leaderboard() {
         </div>
 
         {isLoading &&
-          Array.from({ length: 8 }).map((_, i) => <Skeleton key={i} className="mx-5 my-2 h-12 rounded-lg" />)}
+          Array.from({ length: 8 }).map((_, i) => <Skeleton key={i} className="mx-5 my-2 h-12 rounded-xl" />)}
 
         {!isLoading && entries?.length === 0 && (
           <p className="px-5 py-14 text-center text-mist-400">
@@ -55,8 +55,8 @@ export default function Leaderboard() {
             <div
               key={e.userId}
               className={cn(
-                "grid grid-cols-[auto_1fr_auto_auto_auto] items-center gap-4 border-b border-ink-800/60 px-5 py-3.5 text-sm last:border-b-0",
-                isMe && "bg-signal-500/[0.06]"
+                "grid grid-cols-[auto_1fr_auto_auto_auto] items-center gap-4 border-b border-white/[0.06] px-5 py-3.5 text-sm transition-colors last:border-b-0",
+                isMe ? "bg-signal-500/[0.06]" : "hover:bg-white/[0.02]"
               )}
             >
               <span className={cn("w-8 font-mono-nums font-semibold", RANK_STYLES[i] ?? "text-mist-400")}>

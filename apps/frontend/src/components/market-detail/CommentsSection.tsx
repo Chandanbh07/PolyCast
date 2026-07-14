@@ -45,7 +45,7 @@ export function CommentsSection({ marketId }: { marketId: string }) {
   }
 
   return (
-    <div className="glass rounded-2xl p-6">
+    <div className="glass rounded-3xl p-6">
       <div className="flex items-center gap-2">
         <MessageSquare className="size-4 text-mist-400" />
         <h3 className="font-display text-sm font-semibold text-mist-50">Comments</h3>
@@ -60,7 +60,7 @@ export function CommentsSection({ marketId }: { marketId: string }) {
               onChange={(e) => setDraft(e.target.value)}
               placeholder="Share your read on this market…"
               rows={2}
-              className="min-h-[44px] flex-1 resize-none rounded-xl border border-ink-700 bg-ink-900/60 px-3 py-2.5 text-sm text-mist-100 placeholder:text-mist-400 focus:border-signal-400 focus:outline-none"
+              className="min-h-[44px] flex-1 resize-none rounded-xl border border-white/[0.08] bg-white/[0.03] px-3 py-2.5 text-sm text-mist-100 placeholder:text-mist-400 transition-colors focus:border-signal-400 focus:outline-none"
             />
             <Button
               size="icon"
@@ -75,7 +75,7 @@ export function CommentsSection({ marketId }: { marketId: string }) {
           <button
             onClick={signIn}
             disabled={!walletAvailable}
-            className="w-full rounded-xl border border-dashed border-ink-600 px-3 py-3 text-center text-sm text-mist-400 hover:border-ink-500 hover:text-mist-200 disabled:opacity-50"
+            className="w-full rounded-xl border border-dashed border-white/[0.12] px-3 py-3 text-center text-sm text-mist-400 transition-colors hover:border-white/[0.2] hover:text-mist-200 disabled:opacity-50"
           >
             {walletAvailable ? "Connect a wallet to join the discussion" : "Install a Solana wallet to comment"}
           </button>
@@ -94,7 +94,7 @@ export function CommentsSection({ marketId }: { marketId: string }) {
 
         {comments?.map((c) => (
           <div key={c.id} className="flex gap-3">
-            <div className="flex size-8 shrink-0 items-center justify-center rounded-full bg-ink-800 font-mono-nums text-[11px] text-mist-300">
+            <div className="flex size-8 shrink-0 items-center justify-center rounded-full border border-white/[0.08] bg-white/[0.04] font-mono-nums text-[11px] text-mist-300">
               {c.user.address.slice(0, 2).toUpperCase()}
             </div>
             <div className="min-w-0 flex-1">

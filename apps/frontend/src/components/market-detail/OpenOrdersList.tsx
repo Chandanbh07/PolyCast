@@ -5,7 +5,7 @@ export function OpenOrdersList({ orders }: { orders: OpenOrder[] }) {
   if (orders.length === 0) return null;
 
   return (
-    <div className="glass rounded-2xl p-6">
+    <div className="glass rounded-3xl p-6">
       <div className="flex items-center justify-between">
         <h3 className="font-display text-sm font-semibold text-mist-50">Your open orders</h3>
         <span className="text-xs text-mist-400">{orders.length} resting</span>
@@ -14,7 +14,7 @@ export function OpenOrdersList({ orders }: { orders: OpenOrder[] }) {
         {orders.map((o) => (
           <div
             key={o.originalOrderId}
-            className="flex items-center justify-between rounded-lg bg-ink-900/50 px-3 py-2 text-sm"
+            className="flex items-center justify-between rounded-xl border border-white/[0.06] bg-white/[0.02] px-3 py-2 text-sm"
           >
             <span className="flex items-center gap-2">
               <span

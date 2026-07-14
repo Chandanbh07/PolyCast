@@ -31,7 +31,7 @@ export default function Orders() {
   if (!address) {
     return (
       <div className="mx-auto max-w-5xl px-4 py-10 sm:px-6">
-        <h1 className="font-display text-3xl font-semibold text-mist-50">Orders</h1>
+        <h1 className="font-display text-3xl font-semibold tracking-[-0.02em] text-mist-50">Orders</h1>
         <ConnectGate label="order history" />
       </div>
     );
@@ -41,10 +41,10 @@ export default function Orders() {
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-10 sm:px-6">
-      <h1 className="font-display text-3xl font-semibold text-mist-50">Order history</h1>
+      <h1 className="font-display text-3xl font-semibold tracking-[-0.02em] text-mist-50">Order history</h1>
 
-      <div className="glass mt-6 overflow-hidden rounded-2xl">
-        <div className="grid grid-cols-[1fr_auto_auto_auto] gap-3 border-b border-ink-700/60 px-5 py-3 text-xs font-medium text-mist-400">
+      <div className="glass mt-6 overflow-hidden rounded-3xl">
+        <div className="grid grid-cols-[1fr_auto_auto_auto] gap-3 border-b border-white/[0.06] px-5 py-3 text-xs font-medium text-mist-400">
           <span>Market</span>
           <span className="text-right">Type</span>
           <span className="text-right">Price</span>
@@ -52,7 +52,7 @@ export default function Orders() {
         </div>
 
         {historyLoading &&
-          Array.from({ length: 5 }).map((_, i) => <Skeleton key={i} className="mx-5 my-2 h-10 rounded-lg" />)}
+          Array.from({ length: 5 }).map((_, i) => <Skeleton key={i} className="mx-5 my-2 h-10 rounded-xl" />)}
 
         {!historyLoading && sorted.length === 0 && (
           <p className="px-5 py-10 text-center text-mist-400">No orders yet.</p>
@@ -62,7 +62,7 @@ export default function Orders() {
           <Link
             key={h.id}
             to={`/markets/${h.marketId}`}
-            className="grid grid-cols-[1fr_auto_auto_auto] items-center gap-3 border-b border-ink-800/60 px-5 py-3 text-sm last:border-b-0 hover:bg-ink-800/40"
+            className="grid grid-cols-[1fr_auto_auto_auto] items-center gap-3 border-b border-white/[0.06] px-5 py-3 text-sm transition-colors last:border-b-0 hover:bg-white/[0.03]"
           >
             <span className="truncate text-mist-100">{marketsById.get(h.marketId)?.title ?? h.marketId}</span>
             <span className="text-right">

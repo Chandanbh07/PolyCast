@@ -68,14 +68,14 @@ export function OrderTicket({
 
   if (resolved) {
     return (
-      <div className="glass rounded-2xl p-5 text-center">
+      <div className="glass rounded-3xl p-5 text-center">
         <p className="text-sm text-mist-300">This market has resolved. Trading is closed.</p>
       </div>
     );
   }
 
   return (
-    <div className="glass rounded-2xl p-5">
+    <div className="glass rounded-3xl p-5">
       <Tabs value={side} onValueChange={(v) => handleSideChange(v as "yes" | "no")}>
         <TabsList className="w-full grid grid-cols-2">
           <TabsTrigger value="yes" className="data-[state=active]:!bg-yes-500/20 data-[state=active]:!text-yes-400">
@@ -93,8 +93,10 @@ export function OrderTicket({
             key={t}
             onClick={() => setType(t)}
             className={cn(
-              "flex-1 rounded-lg border py-1.5 text-sm font-medium capitalize transition-colors",
-              type === t ? "border-signal-400 bg-signal-500/10 text-signal-300" : "border-ink-700 text-mist-400"
+              "flex-1 rounded-full border py-1.5 text-sm font-medium capitalize transition-colors",
+              type === t
+                ? "border-signal-400/50 bg-signal-500/10 text-signal-300"
+                : "border-white/[0.08] text-mist-400 hover:text-mist-200 hover:border-white/[0.14]"
             )}
           >
             {t}
@@ -119,7 +121,7 @@ export function OrderTicket({
         </div>
       </div>
 
-      <div className="mt-4 flex items-center justify-between rounded-lg bg-ink-900/60 px-3 py-2.5 text-sm">
+      <div className="mt-4 flex items-center justify-between rounded-xl border border-white/[0.06] bg-white/[0.02] px-3 py-2.5 text-sm">
         <span className="text-mist-400">{type === "buy" ? "Total cost" : "Est. proceeds"}</span>
         <span className="font-mono-nums font-semibold text-mist-50">${(total / 100).toFixed(2)}</span>
       </div>

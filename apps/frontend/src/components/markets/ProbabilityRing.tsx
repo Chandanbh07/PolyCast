@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 /**
@@ -18,10 +19,16 @@ export function ProbabilityRing({
   const circumference = 2 * Math.PI * radius;
   const offset = circumference * (1 - yesPrice / 100);
   const isBullish = yesPrice >= 50;
+  const color = isBullish ? "var(--color-yes-500)" : "var(--color-no-500)";
 
   return (
     <div className="relative shrink-0" style={{ width: size, height: size }}>
-      <svg width={size} height={size} className="-rotate-90">
+      {/* Soft outcome-tinted glow behind the arc */}
+      <div
+        className="absolute inset-0 rounded-full opacity-40 blur-md"
+        style={{ background: isBullish ? "var(--color-yes-glow)" : "var(--color-no-glow)" }}
+      />
+      <svg width={size} height={size} className="relative -rotate-90">
         <circle
           cx={size / 2}
           cy={size / 2}
@@ -30,26 +37,22 @@ export function ProbabilityRing({
           stroke="var(--color-ink-700)"
           strokeWidth={strokeWidth}
         />
-        <circle
+        <motion.circle
           cx={size / 2}
           cy={size / 2}
           r={radius}
           fill="none"
-          stroke={isBullish ? "var(--color-yes-500)" : "var(--color-no-500)"}
+          stroke={color}
           strokeWidth={strokeWidth}
           strokeLinecap="round"
           strokeDasharray={circumference}
-          strokeDashoffset={offset}
-          style={{ transition: "stroke-dashoffset 0.6s cubic-bezier(0.22, 1, 0.36, 1)" }}
+          initial={{ strokeDashoffset: circumference }}
+          animate={{ strokeDashoffset: offset }}
+          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
         />
       </svg>
       <div className="absolute inset-0 flex items-center justify-center">
-        <span
-          className={cn(
-            "font-mono-nums text-sm font-semibold",
-            isBullish ? "text-yes-400" : "text-no-400"
-          )}
-        >
+        <span className={cn("font-mono-nums text-sm font-semibold", isBullish ? "text-yes-400" : "text-no-400")}>
           {yesPrice}%
         </span>
       </div>

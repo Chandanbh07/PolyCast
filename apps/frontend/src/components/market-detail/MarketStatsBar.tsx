@@ -3,7 +3,7 @@ import type { MarketStats } from "@/lib/types";
 
 function Stat({ icon, label, value }: { icon: React.ReactNode; label: string; value: string }) {
   return (
-    <div className="flex items-center gap-2.5 rounded-xl bg-ink-900/50 px-3.5 py-2.5">
+    <div className="flex items-center gap-2.5 rounded-xl border border-white/[0.06] bg-white/[0.02] px-3.5 py-2.5">
       <span className="text-mist-400">{icon}</span>
       <div>
         <p className="text-[11px] leading-none text-mist-400">{label}</p>

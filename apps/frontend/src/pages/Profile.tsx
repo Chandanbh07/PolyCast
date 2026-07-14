@@ -20,7 +20,7 @@ export default function Profile() {
   if (!address) {
     return (
       <div className="mx-auto max-w-3xl px-4 py-10 sm:px-6">
-        <h1 className="font-display text-3xl font-semibold text-mist-50">Profile</h1>
+        <h1 className="font-display text-3xl font-semibold tracking-[-0.02em] text-mist-50">Profile</h1>
         <ConnectGate label="profile" />
       </div>
     );
@@ -28,9 +28,9 @@ export default function Profile() {
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-10 sm:px-6">
-      <h1 className="font-display text-3xl font-semibold text-mist-50">Profile</h1>
+      <h1 className="font-display text-3xl font-semibold tracking-[-0.02em] text-mist-50">Profile</h1>
 
-      <div className="glass mt-6 rounded-2xl p-6">
+      <div className="glass mt-6 rounded-3xl p-6">
         <p className="text-xs text-mist-400">Wallet address</p>
         <div className="mt-1.5 flex items-center gap-2">
           <p className="font-mono-nums break-all text-sm text-mist-100">{address}</p>
@@ -39,13 +39,13 @@ export default function Profile() {
               navigator.clipboard.writeText(address);
               toast.success("Address copied");
             }}
-            className="shrink-0 rounded-md p-1.5 text-mist-400 hover:bg-ink-800 hover:text-mist-100"
+            className="shrink-0 rounded-md p-1.5 text-mist-400 transition-colors hover:bg-white/[0.06] hover:text-mist-100"
           >
             <Copy className="size-3.5" />
           </button>
         </div>
 
-        <div className="mt-6 flex items-center justify-between rounded-xl bg-ink-900/60 p-4">
+        <div className="mt-6 flex items-center justify-between rounded-xl border border-white/[0.06] bg-white/[0.02] p-4">
           <div>
             <p className="text-xs text-mist-400">Cash balance</p>
             {isLoading ? (
@@ -62,7 +62,7 @@ export default function Profile() {
 
         <button
           onClick={signOut}
-          className="mt-6 text-sm font-medium text-no-400 hover:text-no-300"
+          className="mt-6 text-sm font-medium text-no-400 transition-colors hover:text-no-300"
         >
           Disconnect wallet
         </button>

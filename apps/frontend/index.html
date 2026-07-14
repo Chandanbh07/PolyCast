@@ -1,13 +1,29 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/fav.png" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PolyCast | Prediction Markets</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+
+<head>
+  <script>
+    (function () {
+      try {
+        var stored = localStorage.getItem("polycast-theme");
+        // Default is dark. Only go light if explicitly saved as light.
+        var theme = stored === "light" ? "light" : "dark";
+        document.documentElement.classList.add(theme);
+        document.documentElement.style.colorScheme = theme;
+      } catch (e) {
+        document.documentElement.classList.add("dark");
+      }
+    })();
+  </script>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/fav.png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PolyCast | Prediction Markets</title>
+</head>
+
+<body>
+  <div id="root"></div>
+  <script type="module" src="/src/main.tsx"></script>
+</body>
+
 </html>

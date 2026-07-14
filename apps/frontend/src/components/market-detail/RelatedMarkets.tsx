@@ -18,7 +18,7 @@ export function RelatedMarkets({ market }: { market: Market }) {
     return (
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
         {Array.from({ length: 3 }).map((_, i) => (
-          <Skeleton key={i} className="h-56 rounded-2xl" />
+          <Skeleton key={i} className="h-56 rounded-3xl" />
         ))}
       </div>
     );

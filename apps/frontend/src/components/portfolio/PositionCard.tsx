@@ -21,7 +21,7 @@ function Leg({
   const pnl = currentValue - costBasis;
   const pnlPositive = pnl >= 0;
   return (
-    <div className={cn("rounded-xl p-3", accent === "yes" ? "bg-yes-500/10" : "bg-no-500/10")}>
+    <div className={cn("rounded-xl border p-3", accent === "yes" ? "border-yes-500/20 bg-yes-500/10" : "border-no-500/20 bg-no-500/10")}>
       <p className="text-xs text-mist-400">
         {label} · {qty} sh
       </p>
@@ -70,7 +70,7 @@ export function PositionCard({
     : (noQty * pricing.noPrice) / 100;
 
   return (
-    <Link to={`/markets/${market.id}`} className="glass glass-hover block rounded-2xl p-5">
+    <Link to={`/markets/${market.id}`} className="glass glass-hover block rounded-3xl p-5">
       <div className="flex items-start justify-between gap-3">
         <h3 className="font-display text-sm font-semibold text-mist-50 line-clamp-2">{market.title}</h3>
         {market.resolution && <Badge variant="signal">Resolved · {market.resolution}</Badge>}

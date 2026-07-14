@@ -41,7 +41,7 @@ export function SplitMergeCard({ marketId }: { marketId: string }) {
   if (!address) return null;
 
   return (
-    <div className="glass rounded-2xl p-5">
+    <div className="glass rounded-3xl p-5">
       <h3 className="font-display text-sm font-semibold text-mist-50">Split &amp; Merge</h3>
       <p className="mt-1 text-xs text-mist-400">
         Split turns $ into an equal number of Yes and No shares. Merge redeems an equal number of

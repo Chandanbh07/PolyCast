@@ -18,7 +18,7 @@ function Side({ book, side }: { book: Orderbook; side: "yes" | "no" }) {
       ) : (
         <div className="space-y-1">
           {levels.map((l) => (
-            <div key={l.price} className="relative overflow-hidden rounded-lg">
+            <div key={l.price} className="relative overflow-hidden rounded-xl">
               <div
                 className={cn(
                   "absolute inset-y-0 left-0",

@@ -7,27 +7,34 @@ import './index.css'
 import App from './App.tsx'
 import { queryClient } from './lib/queryClient'
 import { AuthProvider } from './context/AuthContext'
+import { ThemeProvider } from "@/context/ThemeContext"
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <AuthProvider>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
-        <Toaster
-          theme="dark"
-          position="top-right"
-          offset={{ top: 76 }}
-          toastOptions={{
-            style: {
-              background: 'rgba(23,19,16,0.97)',
-              border: '1px solid rgba(255,255,255,0.08)',
-              color: '#f0ebe0',
-            },
-          }}
-        />
-      </AuthProvider>
-    </QueryClientProvider>
+    <ThemeProvider>
+      <QueryClientProvider client={queryClient}>
+        <AuthProvider>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+          <Toaster
+            theme="system"
+            position="top-right"
+            offset={{ top: 76 }}
+            toastOptions={{
+              style: {
+                background: 'var(--tooltip-bg)',
+                backdropFilter: 'blur(20px)',
+                WebkitBackdropFilter: 'blur(20px)',
+                border: '1px solid var(--glass-border)',
+                borderRadius: '14px',
+                boxShadow: 'var(--shadow-elevated)',
+                color: 'var(--text-primary)',
+              },
+            }}
+          />
+        </AuthProvider>
+      </QueryClientProvider>
+    </ThemeProvider>
   </StrictMode>,
 )

@@ -18,7 +18,7 @@ export function RecentTrades({ trades, isLoading }: { trades: Trade[] | undefine
     return (
       <div className="space-y-2">
         {Array.from({ length: 5 }).map((_, i) => (
-          <div key={i} className="h-9 animate-pulse rounded-lg bg-ink-800/60" />
+          <div key={i} className="h-9 animate-pulse rounded-xl bg-ink-800/60" />
         ))}
       </div>
     );
@@ -29,7 +29,7 @@ export function RecentTrades({ trades, isLoading }: { trades: Trade[] | undefine
   }
 
   return (
-    <div className="max-h-80 overflow-y-auto">
+    <div className="max-h-80 overflow-y-auto scrollbar-none">
       <div className="mb-2 grid grid-cols-[auto_1fr_auto_auto_auto] gap-3 px-1 text-xs font-medium text-mist-400">
         <span className="w-14">Side</span>
         <span>Type</span>
@@ -41,7 +41,7 @@ export function RecentTrades({ trades, isLoading }: { trades: Trade[] | undefine
         {trades.map((t) => (
           <div
             key={t.id}
-            className="grid grid-cols-[auto_1fr_auto_auto_auto] items-center gap-3 rounded-lg px-1 py-1.5 text-sm hover:bg-ink-800/40"
+            className="grid grid-cols-[auto_1fr_auto_auto_auto] items-center gap-3 rounded-xl px-1 py-1.5 text-sm transition-colors hover:bg-white/[0.03]"
           >
             <span
               className={cn(

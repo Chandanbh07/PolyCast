@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import { useInView, useMotionValue, useSpring } from "framer-motion";
+import { cn } from "@/lib/utils";
 
 export function CountUp({
   value,
@@ -26,7 +27,7 @@ export function CountUp({
   }, [spring, format]);
 
   return (
-    <span ref={ref} className={className}>
+    <span ref={ref} className={cn("font-mono-nums", className)}>
       {format(0)}
     </span>
   );
