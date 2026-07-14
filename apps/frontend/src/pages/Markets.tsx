@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { motion } from "framer-motion";
+import { motion, type Variants } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
 import { Search, X } from "lucide-react";
 import { getMarkets } from "@/lib/api";
@@ -16,18 +16,30 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 type SortKey = "volume" | "yes-high" | "yes-low";
 
-const gridContainer = { hidden: {}, show: { transition: { staggerChildren: 0.06 } } };
-const gridItem = {
-  hidden: { opacity: 0, y: 20 },
+const gridContainer: Variants = {
+  hidden: {},
+  show: {
+    transition: {
+      staggerChildren: 0.06,
+    },
+  },
+};
+
+const gridItem: Variants = {
+  hidden: {
+    opacity: 0,
+    y: 20,
+  },
   show: {
     opacity: 1,
     y: 0,
     transition: {
       duration: 0.45,
-      ease: [0.22, 1, 0.36, 1] as [number, number, number, number]
-    }
-  }
+      ease: "easeOut",
+    },
+  },
 };
+
 export default function Markets() {
   const { data: markets, isLoading } = useQuery({ queryKey: queryKeys.markets, queryFn: getMarkets });
   const [searchParams, setSearchParams] = useSearchParams();
@@ -63,7 +75,7 @@ export default function Markets() {
         animate={{ opacity: 1, y: 0 }}
         transition={{
           duration: 0.5,
-          ease: [0.22, 1, 0.36, 1] as [number, number, number, number],
+          ease: "easeOut"
         }}
         className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
       >
@@ -89,7 +101,7 @@ export default function Markets() {
         animate={{ opacity: 1, y: 0 }}
         transition={{
           duration: 0.5,
-          ease: [0.22, 1, 0.36, 1] as [number, number, number, number],
+          ease: "easeOut"
         }}
         className="mt-5 flex flex-wrap items-center justify-between gap-3"
       >
