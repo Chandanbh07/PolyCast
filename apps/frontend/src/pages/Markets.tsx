@@ -17,8 +17,17 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 type SortKey = "volume" | "yes-high" | "yes-low";
 
 const gridContainer = { hidden: {}, show: { transition: { staggerChildren: 0.06 } } };
-const gridItem = { hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0, transition: { duration: 0.45, ease: [0.22, 1, 0.36, 1] } } };
-
+const gridItem = {
+  hidden: { opacity: 0, y: 20 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.45,
+      ease: [0.22, 1, 0.36, 1] as [number, number, number, number]
+    }
+  }
+};
 export default function Markets() {
   const { data: markets, isLoading } = useQuery({ queryKey: queryKeys.markets, queryFn: getMarkets });
   const [searchParams, setSearchParams] = useSearchParams();
@@ -52,7 +61,10 @@ export default function Markets() {
       <motion.div
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+        transition={{
+          duration: 0.5,
+          ease: [0.22, 1, 0.36, 1] as [number, number, number, number],
+        }}
         className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
       >
         <div>
@@ -75,7 +87,10 @@ export default function Markets() {
       <motion.div
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
+        transition={{
+          duration: 0.5,
+          ease: [0.22, 1, 0.36, 1] as [number, number, number, number],
+        }}
         className="mt-5 flex flex-wrap items-center justify-between gap-3"
       >
         <div className="flex flex-wrap items-center gap-3">
