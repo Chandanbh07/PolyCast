@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
+import { motion, type Variants } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
 import { ArrowRight, Layers, Radio, Timer } from "lucide-react";
 import { getMarkets } from "@/lib/api";
@@ -27,7 +27,7 @@ function Reveal({ children, delay = 0, y = 20, className }: { children: React.Re
       initial={{ opacity: 0, y }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration: 0.55, delay, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.55, delay, ease: "easeOut" }}
       className={className}
     >
       {children}
@@ -60,8 +60,29 @@ function SectionHeading({ title, to }: { title: string; to: string }) {
   );
 }
 
-const gridContainer = { hidden: {}, show: { transition: { staggerChildren: 0.1 } } };
-const gridItem = { hidden: { opacity: 0, y: 24 }, show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } } };
+const gridContainer: Variants = {
+  hidden: {},
+  show: {
+    transition: {
+      staggerChildren: 0.1,
+    },
+  },
+};
+
+const gridItem: Variants = {
+  hidden: {
+    opacity: 0,
+    y: 24,
+  },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.5,
+      ease: "easeOut",
+    },
+  },
+};
 
 export default function Home() {
   const { data: markets, isLoading } = useQuery({ queryKey: queryKeys.markets, queryFn: getMarkets });
@@ -119,7 +140,7 @@ export default function Home() {
                   key={i}
                   initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 0.15 + i * 0.06, ease: [0.22, 1, 0.36, 1] }}
+                  transition={{ duration: 0.5, delay: 0.15 + i * 0.06, ease: "easeOut" }}
                   className="mr-[0.25em] inline-block"
                 >
                   {word}
@@ -166,7 +187,7 @@ export default function Home() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
             className="relative mx-auto w-full max-w-sm lg:mx-0"
           >
             <div className="glass glass-hover relative rounded-3xl p-6" style={{ boxShadow: "var(--shadow-glass)" }}>
@@ -311,7 +332,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-60px" }}
-            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
             className="glass relative overflow-hidden rounded-3xl px-8 py-14 text-center sm:px-16"
             style={{ backgroundImage: "radial-gradient(ellipse 60% 80% at 50% 0%, rgba(79,140,255,0.10), transparent)" }}
           >

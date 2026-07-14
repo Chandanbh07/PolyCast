@@ -14,10 +14,8 @@ export function ProbabilityWeather({ yesPrice }: { yesPrice: number }) {
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduce) return;
 
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
+    const canvas = canvasRef.current!;
+    const ctx = canvas.getContext("2d")!;
 
     let raf = 0;
     let w = 0;
